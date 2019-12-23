@@ -34,5 +34,6 @@
         <module>jupiter-serialization-java</module>
         <module>jupiter-serialization-kryo</module>
         <module>jupiter-serialization-protostuff</module>
+        <module>jupiter-serialization-protobuf</module>
     </modules>
 </project>
