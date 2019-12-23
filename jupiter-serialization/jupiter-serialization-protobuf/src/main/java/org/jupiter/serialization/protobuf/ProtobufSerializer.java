@@ -25,7 +25,7 @@ public class ProtobufSerializer extends Serializer {
 
     @Override
     public <T> OutputBuf writeObject(OutputBuf outputBuf, T obj) {
-        return null;
+        throw  new UnsupportedOperationException("不支持这个方法的调用");
     }
 
     @Override
@@ -35,7 +35,7 @@ public class ProtobufSerializer extends Serializer {
 
     @Override
     public <T> T readObject(InputBuf inputBuf, Class<T> clazz) {
-        return null;
+        throw  new UnsupportedOperationException("不支持这个方法的调用");
     }
 
     @Override
