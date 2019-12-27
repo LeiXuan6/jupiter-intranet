@@ -1,5 +1,6 @@
 package org.jupiter.serialization.protobuf;
 
+import com.google.protobuf.GeneratedMessageV3;
 import com.google.protobuf.InvalidProtocolBufferException;
 import com.google.protobuf.Parser;
 import org.jupiter.common.util.internal.logging.InternalLogger;
@@ -10,6 +11,8 @@ import org.jupiter.serialization.io.InputBuf;
 import org.jupiter.serialization.io.OutputBuf;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 /**
  * @author Ray
@@ -30,7 +33,7 @@ public class ProtobufSerializer extends Serializer {
 
     @Override
     public <T> byte[] writeObject(T obj) {
-        return new byte[0];
+        return ((GeneratedMessageV3)obj).toByteArray();
     }
 
     @Override
@@ -40,14 +43,16 @@ public class ProtobufSerializer extends Serializer {
 
     @Override
     public <T> T readObject(byte[] bytes, int offset, int length, Class<T> messageClazz) {
+
+
         try {
-            Field field = messageClazz.getDeclaredField("PARSER");
-            if (field == null) {
+            Method method = messageClazz.getDeclaredMethod("parser");
+            if (method == null) {
                 logger.error("The parser field was not found in {} ", messageClazz);
                 return null;
             }
-            field.setAccessible(true);
-            Object parser = field.get(messageClazz);
+            method.setAccessible(true);
+            Object parser = method.invoke(messageClazz);
             if (parser == null) {
                 logger.error("The parser obj is null in {}", messageClazz);
                 return null;
@@ -57,11 +62,13 @@ public class ProtobufSerializer extends Serializer {
                 return null;
             }
             return (T) ((Parser) parser).parseFrom(bytes);
-        } catch (NoSuchFieldException e) {
-            e.printStackTrace();
         } catch (InvalidProtocolBufferException e) {
             e.printStackTrace();
         } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
             e.printStackTrace();
         }
         return null;
