@@ -43,8 +43,6 @@ public class ProtobufSerializer extends Serializer {
 
     @Override
     public <T> T readObject(byte[] bytes, int offset, int length, Class<T> messageClazz) {
-
-
         try {
             Method method = messageClazz.getDeclaredMethod("parser");
             if (method == null) {
