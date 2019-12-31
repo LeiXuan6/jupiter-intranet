@@ -19,7 +19,11 @@ import org.jupiter.common.util.LongSequence;
 
 /**
  * 请求的消息体bytes/stream载体, 避免在IO线程中序列化/反序列化, jupiter-transport这一层不关注消息体的对象结构.
- *
+ * <ul>
+ * 这样的分层，更有助于逻辑的解耦，是很有必要的。这一层只是包装字节信息，可以理解为是第一次编码，具体参考ProtocolDecoder.至于使用者想把
+ * JRequestPayload转成Protobuf对象，还是Protostuss对象，使用者可以进行第二次编码，具体参考{@link org.jupiter.serialization.Serializer}的实现与调用的地方。
+ * {@link org.jupiter.serialization.Serializer}抽象了二次编码，使用者可以自定义去实现。
+ * </ul>
  * jupiter
  * org.jupiter.transport.payload
  *
@@ -45,6 +49,7 @@ public class JRequestPayload extends PayloadHolder {
         this(sequence.next());
     }
 
+    //这个构造方法，很有必要，外部可能是希望自己定义这个id
     public JRequestPayload(long invokeId) {
         this.invokeId = invokeId;
     }
