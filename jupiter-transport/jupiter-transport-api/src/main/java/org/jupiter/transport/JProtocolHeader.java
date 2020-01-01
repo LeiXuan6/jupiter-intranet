@@ -45,7 +45,7 @@ public class JProtocolHeader {
     /** 协议头长度 */
     public static final int HEADER_SIZE = 16;
     /** Magic */
-    public static final short MAGIC = (short) 0xbabe;
+    public static final short MAGIC = (short) 0xa8;
 
     /** Message Code: 0x01 ~ 0x0f =================================================================================== */
     public static final byte REQUEST                    = 0x01;     // Request
