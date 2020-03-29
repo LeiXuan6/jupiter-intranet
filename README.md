@@ -57,7 +57,7 @@
 + JDK1.8 或更高版本
 + 依赖管理工具: Maven3.x 版本
 
-##### [最新版本OSS下载](https://oss.sonatype.org/#nexus-search;quick~org.jupiter-rpc)
+##### [最新版本OSS下载](https://oss.sonatype.org/#search;quick~org.jupiter-rpc)
 ##### [最新版本Maven中心仓库下载](http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22org.jupiter-rpc%22%20AND%20jupiter)
 ##### Maven依赖:
 ```xml

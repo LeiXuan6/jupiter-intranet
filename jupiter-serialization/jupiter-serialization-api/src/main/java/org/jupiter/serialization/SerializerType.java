@@ -30,6 +30,7 @@ public enum SerializerType {
     KRYO        ((byte) 0x03),
     JAVA        ((byte) 0x04),
     PROTOBUF    ((byte)0x05),
+    MSGPACK     ((byte)0x06),
     // ...
     ;
 

@@ -35,5 +35,6 @@
         <module>jupiter-serialization-kryo</module>
         <module>jupiter-serialization-protostuff</module>
         <module>jupiter-serialization-protobuf</module>
+        <module>jupiter-serialization-msgpack</module>
     </modules>
 </project>
