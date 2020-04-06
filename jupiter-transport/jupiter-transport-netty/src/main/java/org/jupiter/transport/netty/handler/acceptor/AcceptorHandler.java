@@ -49,7 +49,7 @@ public class AcceptorHandler extends ChannelInboundHandlerAdapter {
 
     private static final AtomicInteger channelCounter = new AtomicInteger(0);
 
-    private ProviderProcessor processor;
+    protected  ProviderProcessor processor;
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {

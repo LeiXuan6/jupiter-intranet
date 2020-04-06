@@ -72,6 +72,7 @@ public class JProtocolHeader {
     private byte status;            // 响应状态码
     private long id;                // request.invokeId, 用于映射 <id, request, response> 三元组
     private int bodySize;           // 消息体长度
+    private long subId;             //子id,用于转发
 
     public static byte toSign(byte serializerCode, byte messageCode) {
         return (byte) ((serializerCode << 4) | (messageCode & 0x0f));
@@ -108,6 +109,14 @@ public class JProtocolHeader {
         this.id = id;
     }
 
+    public void subId(long subId){
+        this.subId = subId;
+    }
+
+    public long subId(){
+        return this.subId;
+    }
+
     public int bodySize() {
         return bodySize;
     }
@@ -123,6 +132,7 @@ public class JProtocolHeader {
                 ", serializerCode=" + serializerCode +
                 ", status=" + status +
                 ", id=" + id +
+                ",subId=" + subId +
                 ", bodySize=" + bodySize +
                 '}';
     }

@@ -57,14 +57,14 @@ import org.jupiter.transport.payload.JResponsePayload;
 public class ProtocolDecoder extends ReplayingDecoder<ProtocolDecoder.State> {
 
     // 协议体最大限制, 默认5M
-    private static final int MAX_BODY_SIZE = SystemPropertyUtil.getInt("jupiter.io.decoder.max.body.size", 1024 * 1024 * 5);
+    protected static final int MAX_BODY_SIZE = SystemPropertyUtil.getInt("jupiter.io.decoder.max.body.size", 1024 * 1024 * 5);
 
     /**
      * Cumulate {@link ByteBuf}s by add them to a CompositeByteBuf and so do no memory copy whenever possible.
      * Be aware that CompositeByteBuf use a more complex indexing implementation so depending on your use-case
      * and the decoder implementation this may be slower then just use the {@link #MERGE_CUMULATOR}.
      */
-    private static final boolean USE_COMPOSITE_BUF = SystemPropertyUtil.getBoolean("jupiter.io.decoder.composite.buf", false);
+    protected static final boolean USE_COMPOSITE_BUF = SystemPropertyUtil.getBoolean("jupiter.io.decoder.composite.buf", false);
 
     public ProtocolDecoder() {
         super(State.MAGIC);
@@ -74,7 +74,7 @@ public class ProtocolDecoder extends ReplayingDecoder<ProtocolDecoder.State> {
     }
 
     // 协议头
-    private final JProtocolHeader header = new JProtocolHeader();
+    protected final JProtocolHeader header = new JProtocolHeader();
 
     @Override
     protected void decode(ChannelHandlerContext ctx, ByteBuf in, List<Object> out) throws Exception {
@@ -131,24 +131,25 @@ public class ProtocolDecoder extends ReplayingDecoder<ProtocolDecoder.State> {
         }
     }
 
-    private static void checkMagic(short magic) throws Signal {
+    protected static void checkMagic(short magic) throws Signal {
         if (magic != JProtocolHeader.MAGIC) {
             throw IoSignals.ILLEGAL_MAGIC;
         }
     }
 
-    private static int checkBodySize(int size) throws Signal {
+    protected static int checkBodySize(int size) throws Signal {
         if (size > MAX_BODY_SIZE) {
             throw IoSignals.BODY_TOO_LARGE;
         }
         return size;
     }
 
-    enum State {
+    protected enum State {
         MAGIC,
         SIGN,
         STATUS,
         ID,
+        SUB_ID,
         BODY_SIZE,
         BODY
     }
